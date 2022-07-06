@@ -11,7 +11,7 @@ class Flats extends StatefulWidget {
 }
 
 class _FlatsState extends State<Flats> {
-  late List<Flat> flats;
+  List<Flat> flats = <Flat>[];
 
   getFlats() {
     FlatService.fetchFlats().then((response) {
@@ -27,9 +27,13 @@ class _FlatsState extends State<Flats> {
 
   @override
   Widget build(BuildContext context) {
+    getFlats();
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[900],
         title: const Text('Flat List'),
+        centerTitle: false,
+        elevation: 5.0,
       ),
       body: flats.isEmpty
           ? const Center(
@@ -39,16 +43,72 @@ class _FlatsState extends State<Flats> {
               itemCount: flats.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color: Colors.orange[200],
-                  margin: const EdgeInsets.all(15),
+                  color: flats[index].status ? Colors.red : Colors.green,
+                  margin: const EdgeInsets.all(10),
                   elevation: 2.0,
                   child: ListTile(
-                    title: Text(flats[index].name),
+                    textColor: Colors.white,
+                    iconColor: Colors.white,
+                    title: Text(
+                      flats[index].name,
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(flats[index].category),
                     onTap: null,
+                    trailing: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.delete),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 );
               },
             ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        color: Colors.blue[900],
+        child: SizedBox(
+          height: 40.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Text(
+                '© 2022 FRMS. All rights reserved.',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13.0,
+                ),
+              ),
+              Text(
+                'Developed by Md. Imran Habib.',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

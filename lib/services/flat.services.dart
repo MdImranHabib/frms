@@ -1,11 +1,10 @@
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:intl/intl.dart';
 
 class FlatService {
-  static Uri url = Uri.parse('http://localhost:49918/api/flats');
+  //static String url = 'http://localhost:49918/api/flats';
+  static String url = 'http://192.168.2.51:85/api/flats';
 
   static Future fetchFlats() async {
-    return await http.get(url);
+    return await http.get(Uri.parse(url));
   }
 }

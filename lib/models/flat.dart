@@ -3,7 +3,7 @@ class Flat {
   late String name;
   late String category;
   late String description;
-  late double rent;
+  late int rent;
   late String meterNo;
   late bool status;
 

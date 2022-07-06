@@ -6,4 +6,11 @@ void main() => runApp(MaterialApp(
       routes: {
         '/': (context) => const Flats(),
       },
+      title: 'Flat Rent Management System',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xFF2661FA),
+        scaffoldBackgroundColor: Colors.white,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     ));
