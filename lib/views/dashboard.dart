@@ -26,10 +26,12 @@ class _DashboardState extends State<Dashboard> {
             makeDashboardItem("Flats", Icons.home, Colors.green, '/flat_list'),
             makeDashboardItem(
                 "Residents", Icons.people_alt, Colors.lightGreen, '/'),
-            makeDashboardItem("Rents", Icons.home, Colors.blue, '/'),
-            makeDashboardItem("Users", Icons.alarm, Colors.cyan, '/'),
-            makeDashboardItem("Invoices", Icons.alarm, Colors.deepOrange, '/'),
-            makeDashboardItem("Reports", Icons.alarm, Colors.orange, '/'),
+            makeDashboardItem("Rents", Icons.attach_money, Colors.blue, '/'),
+            makeDashboardItem("Users", Icons.people_outline, Colors.cyan, '/'),
+            makeDashboardItem("Invoices", Icons.receipt_long_outlined,
+                Colors.deepOrange, '/'),
+            makeDashboardItem(
+                "Reports", Icons.file_copy_outlined, Colors.orange, '/'),
           ],
         ),
       ),
