@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:frms/models/flat.dart';
 import 'package:frms/services/flat.services.dart';
 
-class Flats extends StatefulWidget {
-  const Flats({Key? key}) : super(key: key);
+class FlatList extends StatefulWidget {
+  const FlatList({Key? key}) : super(key: key);
 
   @override
-  State<Flats> createState() => _FlatsState();
+  State<FlatList> createState() => _FlatListState();
 }
 
-class _FlatsState extends State<Flats> {
+class _FlatListState extends State<FlatList> {
   List<Flat> flats = <Flat>[];
 
   getFlats() {
@@ -79,7 +79,7 @@ class _FlatsState extends State<Flats> {
             ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
-        color: Colors.blue[900],
+        color: const Color.fromRGBO(49, 87, 110, 1.0),
         child: SizedBox(
           height: 40.0,
           child: Column(
