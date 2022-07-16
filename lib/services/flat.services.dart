@@ -13,7 +13,7 @@ class FlatService {
   }
 
   //Read a flat details
-  static Future fetchFlat(Flat flat) async {
+  static Future fetchFlatDetails(Flat flat) async {
     return await http.get(Uri.parse('${url}flats/${flat.id}'));
   }
 
