@@ -13,8 +13,14 @@ class FlatList extends StatefulWidget {
 class _FlatListState extends State<FlatList> {
   List<Flat> flats = <Flat>[];
 
-  getFlats() {
-    FlatService.fetchFlats().then((response) {
+  @override
+  void initState() {
+    getFlats();
+    super.initState();
+  }
+
+  void getFlats() async {
+    await FlatService.fetchFlats().then((response) {
       Iterable list = json.decode(response.body);
       List<Flat> flatList = <Flat>[];
       flatList = list.map((model) => Flat.fromObject(model)).toList();
@@ -25,9 +31,13 @@ class _FlatListState extends State<FlatList> {
     });
   }
 
+  // void removeFlat(int flatId) {
+  //   FlatService.deleteFlat(flatId)
+  // }
+
   @override
   Widget build(BuildContext context) {
-    getFlats();
+    //getFlats();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
@@ -67,7 +77,10 @@ class _FlatListState extends State<FlatList> {
                             icon: const Icon(Icons.edit),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              //removeFlat(flats[index].id);
+                              FlatService.deleteFlat(flats[index].id);
+                            },
                             icon: const Icon(Icons.delete),
                           )
                         ],
@@ -110,7 +123,8 @@ class _FlatListState extends State<FlatList> {
         },
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 }

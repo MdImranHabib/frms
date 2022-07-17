@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:frms/models/flat.dart';
+import 'package:frms/services/flat.services.dart';
 
 class FlatForm extends StatefulWidget {
   const FlatForm({Key? key}) : super(key: key);
@@ -13,12 +17,41 @@ class _FlatFormState extends State<FlatForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   var measure;
-  final TextEditingController _flatNameController = TextEditingController();
-  final TextEditingController _flatCategoryController = TextEditingController();
-  final TextEditingController _flatDescriptionController =
-      TextEditingController();
-  final TextEditingController _flatRentController = TextEditingController();
-  final TextEditingController _flatMeterNoController = TextEditingController();
+  final _flatNameController = TextEditingController();
+  final _flatCategoryController = TextEditingController();
+  final _flatDescriptionController = TextEditingController();
+  final _flatRentController = TextEditingController();
+  final _flatMeterNoController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _flatNameController.dispose();
+    _flatCategoryController.dispose();
+    _flatDescriptionController.dispose();
+    _flatRentController.dispose();
+    _flatMeterNoController.dispose();
+    super.dispose();
+  }
+
+  void addFlat(String flatName, String flatCategory, String flatDescription,
+      int flatRent, String flatMeterNo) {
+    Flat flat = Flat(
+        id: 0,
+        name: flatName,
+        category: 'Large',
+        description: flatDescription,
+        rent: flatRent,
+        meterNo: flatMeterNo,
+        status: false);
+
+    FlatService.createFlat(flat).then((response) {
+      if (response == true) {
+        // Navigator.pushReplacementNamed(context, '/flat_list');
+        Navigator.pop(context);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +65,8 @@ class _FlatFormState extends State<FlatForm> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             // const Align(
             //   alignment: Alignment.topLeft,
@@ -81,48 +116,48 @@ class _FlatFormState extends State<FlatForm> {
                   const SizedBox(
                     height: 20,
                   ),
-                  DropdownButtonFormField(
-                      decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 0.0),
-                          ),
-                          border: OutlineInputBorder()),
-                      items: const [
-                        DropdownMenuItem(
-                          value: Text('Small'),
-                          child: Text('Small'),
-                        ),
-                        DropdownMenuItem(
-                          value: Text('Semi-Large'),
-                          child: Text('Semi-Large'),
-                        ),
-                        DropdownMenuItem(
-                          value: Text('Large'),
-                          child: Text('Large'),
-                        ),
-                        DropdownMenuItem(
-                          value: Text('Extra-Large'),
-                          child: Text('Extra-Large'),
-                        )
-                      ],
-                      hint: const Text("Select Flat Category"),
-                      onChanged: (value) {
-                        setState(() {
-                          measure = value;
-                          // measureList.add(measure);
-                        });
-                      },
-                      onSaved: (value) {
-                        setState(() {
-                          measure = value;
-                        });
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // DropdownButtonFormField(
+                  //     decoration: const InputDecoration(
+                  //         enabledBorder: OutlineInputBorder(
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(20.0)),
+                  //           borderSide:
+                  //               BorderSide(color: Colors.grey, width: 0.0),
+                  //         ),
+                  //         border: OutlineInputBorder()),
+                  //     items: const [
+                  //       DropdownMenuItem(
+                  //         value: 'Small',
+                  //         child: Text('Small'),
+                  //       ),
+                  //       DropdownMenuItem(
+                  //         value: 'Semi-Large',
+                  //         child: Text('Semi-Large'),
+                  //       ),
+                  //       DropdownMenuItem(
+                  //         value: 'Large',
+                  //         child: Text('Large'),
+                  //       ),
+                  //       DropdownMenuItem(
+                  //         value: 'Extra-Large',
+                  //         child: Text('Extra-Large'),
+                  //       )
+                  //     ],
+                  //     hint: const Text("Select Flat Category"),
+                  //     onChanged: (value) {
+                  //       setState(() {
+                  //         measure = value;
+                  //         // measureList.add(measure);
+                  //       });
+                  //     },
+                  //     onSaved: (value) {
+                  //       setState(() {
+                  //         measure = value;
+                  //       });
+                  //     }),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Flat Description',
@@ -192,12 +227,19 @@ class _FlatFormState extends State<FlatForm> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(60)),
+                        minimumSize: const Size.fromHeight(50)),
                     onPressed: () {
-                      // Validate returns true if the form is valid, or false otherwise.
+                      //Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
+                        addFlat(
+                            _flatNameController.text,
+                            _flatCategoryController.text,
+                            _flatDescriptionController.text,
+                            int.parse(_flatRentController.text),
+                            _flatMeterNoController.text);
+                      } else {
                         const AlertDialog(
-                          title: Text('Submitted succesfully!'),
+                          content: Text('Submitted failed!'),
                         );
                       }
                     },
