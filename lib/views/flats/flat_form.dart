@@ -1,8 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:frms/models/flat.dart';
 import 'package:frms/services/flat.services.dart';
 
@@ -16,7 +12,6 @@ class FlatForm extends StatefulWidget {
 class _FlatFormState extends State<FlatForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  var measure;
   final _flatNameController = TextEditingController();
   final _flatCategoryController = TextEditingController();
   final _flatDescriptionController = TextEditingController();

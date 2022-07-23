@@ -31,9 +31,14 @@ class _FlatListState extends State<FlatList> {
     });
   }
 
-  // void removeFlat(int flatId) {
-  //   FlatService.deleteFlat(flatId)
-  // }
+  void removeFlat(int flatId) {
+    FlatService.deleteFlat(flatId).then((response) {
+      if (response == true) {
+        print('deleted successfully!');
+        initState();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +83,8 @@ class _FlatListState extends State<FlatList> {
                           ),
                           IconButton(
                             onPressed: () {
-                              //removeFlat(flats[index].id);
-                              FlatService.deleteFlat(flats[index].id);
+                              removeFlat(flats[index].id);
+                              //FlatService.deleteFlat(flats[index].id);
                             },
                             icon: const Icon(Icons.delete),
                           )
